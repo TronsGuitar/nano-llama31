@@ -120,3 +120,25 @@ TODOs:
 - resolve the printed warning about deprecated set_default_tensor_type
 - finetuning is still broken: we have to correctly not attend past BOS tokens because this is how Llama 3 was trained. We have to do this by carefully setting the mask in the attention layer. This is not yet done.
 - KV cache should only be used in inference, not in training. We're wasting memory initializing it and keeping it around.
+
+## Utility scripts
+
+### Finding local LLM model files
+
+A Windows batch helper script is available at `scripts/find_llm_models.bat` to quickly scan a drive or directory for common large language model checkpoint formats (e.g. `.safetensors`, `.pth`, `.bin`, `.gguf`).
+
+Usage examples:
+
+```bat
+:: Scan the current drive that hosts the script
+find_llm_models.bat
+
+:: Target a specific drive or directory
+find_llm_models.bat D:\Models
+find_llm_models.bat "C:\Downloads" --output models.log
+
+:: Show usage information
+find_llm_models.bat /?
+```
+
+You can tailor which extensions are searched by editing the `LLM_EXTENSIONS` variable near the top of the script. Results are printed to the console by default, and the optional `--output` parameter writes matches to a log file while still validating that the search completed successfully.
